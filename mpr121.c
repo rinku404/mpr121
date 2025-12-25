@@ -20,6 +20,7 @@ esp_err_t mpr121_new(i2c_master_bus_handle_t bus_handle, const mpr121_config_t *
 
     dev->config = *config;
     i2c_device_config_t i2c_dev_conf = {
+        .dev_addr_length = I2C_ADDR_BIT_LEN_7,
         .scl_speed_hz = config->i2c_speed_hz,
         .device_address = config->device_address,
     };

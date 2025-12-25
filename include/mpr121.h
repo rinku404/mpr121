@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 #include "esp_err.h"
 #include "driver/i2c_master.h"
 
@@ -203,6 +206,13 @@ typedef enum {
     MPR121_BASELINE_TRACKING_EN  = 0x80, // Sets CL to 10 (Bit 7)
 } mpr121_baseline_t;
 
+typedef enum {
+    MPR121_ADDR_5A = 0x5A, // ADDR pin grounded
+    MPR121_ADDR_5B = 0x5B, // ADDR pin to 3.3V
+    MPR121_ADDR_5C = 0x5C, // ADDR pin to SDA
+    MPR121_ADDR_5D = 0x5D, // ADDR pin to SCL
+} mpr121_addr_t;
+
 /**
  * @brief Handle for MPR121 device
  */
@@ -212,7 +222,7 @@ typedef struct mpr121_dev_t *mpr121_handle_t;
  * @brief Configuration for MPR121 device
  */
 typedef struct {
-    uint8_t device_address;     /*!< I2C address (default 0x5A) */
+    mpr121_addr_t device_address; /*!< I2C address (default 0x5A) */
     uint32_t i2c_speed_hz;      /*!< I2C clock speed (e.g. 400000) */
     uint8_t electrode_count;    // User sets this to 4, 8, 12, etc.
     bool enable_baseline;       // User toggles this
